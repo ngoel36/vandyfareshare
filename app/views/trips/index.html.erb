@@ -50,8 +50,8 @@
       <div class="trip row-fluid">
         <div class="span2"><h4><%= t.time.strftime("%I:%M %p") %></h4><p><%= t.notes %></div>
         <%# TODO: Convert to time %>
-        <div class="span2"><h5>Vanderbilt, Branscomb Quad</h5></div>
-        <div class="span2"><h5>Nashville International Airport (BNA)</h5></div>
+        <div class="span2"><h5><%= t.from %></h5></div>
+        <div class="span2"><h5><%= t.to %></h5></div>
         <div class="span4">
           <% if t.users.include?(current_user) %>
             <% t.users.each do |u| %>
