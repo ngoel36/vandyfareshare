@@ -1,0 +1,131 @@
+<%= image_tag "http://us.123rf.com/400wm/400/400/savcoco/savcoco1207/savcoco120700042/14487286-yellow-taxi-illustration-on-white.jpg", size: "225x200" %>
+<h1>Vandy FareShare</h1>
+<div class="row-fluid">
+  <div class="span2"><p><b>What does this site do?</b></p><p>Vandy FareShare allows you to split a cab with up to 3 other Vanderbilt students.</p></div>
+   <div class="span2"><p><b>How does this work?</b></p><p>You can browse and join any of the available trips. Or you can create a new trip of your own.</p></div>  
+  <div class="span2"><p><b>Why would I do that ?</b></p><p>You save money. You might also meet a new friend on your cab ride.</p></div>  
+    <div class="span2"><p><b>Who sees my contact information?</b></p><p>Only the students you are sharing a cab with.</p></div>
+    <div class="span2"><p><b>What happens if one of the passengers doesn't show up?</b></p><p>Nothing. It's your responsibility to email/text eachother and arrange to meet.</p></div>
+<div class="span2"><p><b>Who arranges the cab?</b></p><p>Someone in your party should do that.</p></div>
+
+</div>
+<h1>Create a trip</h1>
+    <%= form_for Trip.new do |f| %>
+      <%= f.label :time %>
+      <%= f.datetime_select :time, start_year: 2013, end_year: 2013, ampm: true, discard_year: true, minute_step: 30 %>
+      <%= f.label :from %>
+      <%= f.text_field :from %>
+      <%= f.label :to %>
+      <%= f.text_field :to, value: "Nashville International Airport (BNA)" %>
+      <%= f.label :notes %>
+      <%= f.text_field :notes %>
+      <% if user_signed_in? %>
+        <br><%= f.submit 'Create Trip', class: "btn btn-primary" %><br>
+      <% else %>
+        <br><%= link_to "#loginModal", role: "button", class: "btn btn-primary", :"data-toggle" => "modal" do %>
+          Create Trip
+        <% end %>   
+      <% end %>      
+    <% end %>
+
+<h1>Or join an existing trip:</h1><br>
+
+<% @dates.each do |d| %>
+  <h1 id="<%= d %>"><%= d.strftime("%A, %B %d") %></h1>
+  <div class="row-fluid">
+    <div class="span2"><h3>Time</h3></div>
+    <div class="span2"><h3>From</h3></div>
+    <div class="span2"><h3>To</h3></div>
+    <div class="span6"><h3>Passengers</h3></div>
+  </div>
+  <%# TODO: Table component %>
+  <div id ="trips">
+  <% @trips.each do |t| %>
+    <% if t.time.to_date == d %>
+      <div class="trip row-fluid">
+        <div class="span2"><h4><%= t.time.strftime("%I:%M %p") %></h4><p><%= t.notes %></div>
+        <%# TODO: Convert to time %>
+        <div class="span2"><h5>Vanderbilt, Branscomb Quad</h5></div>
+        <div class="span2"><h5>Nashville International Airport (BNA)</h5></div>
+        <div class="span4">
+          <% if t.users.include?(current_user) %>
+            <% t.users.each do |u| %>
+              <%= "#{u.name} (#{u.phone})" %>
+              <br>
+              <%= mail_to u.email %>
+              <br>
+            <% end %>
+          <% else %>
+            <%= t.users.collect(&:name).join(', ') %><br>
+          <% end %>
+        </div>
+
+        <div class="span2">
+
+          <% if t.users.include?(current_user) %>
+            <%= link_to leave_trip_path(t.id), role: "button", class: "btn" do %>
+              Leave
+              Trip
+            <% end %>
+          <% elsif t.empty_seats>0 %>
+            <% if user_signed_in? %>
+              <%= link_to join_trip_path(t.id), role: "button", class: "btn btn-primary" do %>
+                Join <br>
+                (<%= pluralize(t.empty_seats, "seat") %> left)
+              <% end %>
+            <% else %>
+              <%= link_to "#loginModal", role: "button", class: "btn btn-primary", :"data-toggle" => "modal" do %>
+                Join <br>
+                (<%= pluralize(t.empty_seats, "seat") %> left)
+              <% end %>          
+            <% end %>
+          <% end %>
+
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+  </div>
+<% end %>
+
+<div id="loginModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Login</h3>
+  </div>
+  <div class="modal-body">
+    <%= form_for("user", :url => user_session_path) do |f| %>
+      <%= f.label :email, "Email (Must be @vanderbilt.edu)" %>
+      <%= f.text_field :email %>
+      <%= f.label :password %>
+      <%= f.password_field :password %><br>
+      <%= link_to "Sign Up", "#", :id => "signUpButton", class: "btn" %>
+      <%= f.submit 'Login', class: "btn btn-primary" %><br>
+      <%= link_to "Forgot your password?", new_password_path('user') %>
+    <% end %>
+  </div>
+</div>
+
+<div id="signUpModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Sign Up</h3>
+  </div>
+  <div class="modal-body">
+    <%= form_for("user", :url => registration_path('user')) do |f| %>
+      <%= f.label :name %>
+      <%= f.text_field :name %>
+      <%= f.label :password %>
+      <%= f.password_field :password %><br>
+      <%= f.label :password_confirmation %>
+      <%= f.password_field :password_confirmation %><br>
+      <p>The following information is necessary to ensure that your fellow passengers can contact you if needed. Your personal information will never be displayed publicly.</p>
+      <%= f.label :email, "Email (Must be @vanderbilt.edu)" %>
+      <%= f.text_field :email %>
+      <%= f.label :phone %>
+      <%= f.text_field :phone %>
+      <br><%= f.submit 'Sign Up', class: "btn btn-primary" %><br>
+    <% end %>
+  </div>
+</div>
+

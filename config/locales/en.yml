@@ -1,0 +1,19 @@
+# Sample localization file for English. Add more files in this directory for other locales.
+# See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
+
+en:
+  activerecord:
+    errors:
+      models:
+        user:
+          attributes:
+            email:
+              blank: "Please specify an email address (@vanderbilt.edu)"
+              taken: "Email address already taken"
+            password:
+              blank: "Please specify a password"
+              confirmation: "Password confirmation does not match"
+            password_confirmation:
+              blank: "Please specify a Password Confirmation"
+
+            

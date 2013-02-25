@@ -1,0 +1,21 @@
+<h2>Sign up</h2>
+
+<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
+  <%= devise_error_messages! %>
+
+      <%= f.label :name %>
+      <%= f.text_field :name %>
+      <%= f.label :password %>
+      <%= f.password_field :password %><br>
+      <%= f.label :password_confirmation %>
+      <%= f.password_field :password_confirmation %><br>
+      <p>The following information is necessary to ensure that your fellow passengers can contact you if needed. Your personal information will never be displayed publicly.</p>
+      <%= f.label :email, "Email (Must be @vanderbilt.edu)" %>
+      <%= f.text_field :email %>
+      <%= f.label :phone %>
+      <%= f.text_field :phone %>
+
+  <div><%= f.submit "Sign up" %></div>
+<% end %>
+
+<%= render "devise/shared/links" %>
