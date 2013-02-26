@@ -5,8 +5,13 @@
 #trips>.trip.row-fluid:nth-of-type(odd) {
   background-color: #E9E9EA
 }
+
 .trip.row-fluid {
   margin: 10px -13px; 
   padding: 10px 13px; 
   border: 1px solid #09090E; 
 }
+
+ input {
+  width: 300px;
+ }
