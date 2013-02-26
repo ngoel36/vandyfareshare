@@ -33,6 +33,8 @@ gem "less-rails"
 gem 'twitter-bootstrap-rails', :git => 'git://github.com/seyhunak/twitter-bootstrap-rails.git'
 gem "devise", :git => "git://github.com/plataformatec/devise.git"
 
+
+gem 'twilio-ruby'
 gem 'intercom-rails', '~> 0.2.14'
 
 # To use ActiveModel has_secure_password
