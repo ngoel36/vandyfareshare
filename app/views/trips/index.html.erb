@@ -1,30 +1,14 @@
-<br><br><%= image_tag "http://admissions.vanderbilt.edu/insidedores/manage/wp-content/uploads/vandy-logo-lo-res.jpg", size: "200x200" %>
-<%= image_tag "http://us.123rf.com/400wm/400/400/savcoco/savcoco1207/savcoco120700042/14487286-yellow-taxi-illustration-on-white.jpg", size: "225x200" %>
-<h1>Vandy FareShare</h1>
-
-
+<div class="hero-unit">
+            <h1><%= image_tag "http://upload.wikimedia.org/wikipedia/commons/4/4d/Vanderbilt_Commodores.png", size: "100x100" %>Vandy FareShare<%= image_tag "http://aux.iconpedia.net/uploads/20295017202032016992.png", size: "100x100" %></h1>
+            <p>Vandy FareShare allows you to coordinate cab sharing with your fellow Vanderbilt students.</p>        
 <div class="fb-like" data-href="http://www.vandyfareshare.com" data-send="true" data-width="800" data-show-faces="true" data-font="verdana"></div>
-<br>
+
 <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://www.vandyfareshare.com" data-text="Check out Vandy FareShare. Organizes cab sharing to and from your local airport!" data-size="large">Tweet</a>
 <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-
-<div class="row-fluid">
-  <div class="span2"><p><b>What does this site do?</b></p><p>Vandy FareShare allows you to split a cab with up to 3 other Vanderbilt students.</p></div>
-   <div class="span2"><p><b>How does this work?</b></p><p>You can browse and join any of the available trips. Or you can create a new trip of your own.</p><p>The host of the fare is responsible for making the actual cab arrangements. All we do is provide a platform to organize passengers.</p></div>  
-  <div class="span2"><p><b>Why would I do that ?</b></p><p>You save money. You might also meet a new friend on your cab ride.</p></div>  
-    <div class="span2"><p><b>Who sees my contact information?</b></p><p>Only the students you are sharing a cab with.</p></div>
-    <div class="span2"><p><b>What happens if one of the passengers doesn't show up?</b></p><p>Nothing. It's your responsibility to email/text eachother and arrange to meet.</p></div>
-<div class="span2"><p><b>Did this help you save money?</b></p><p>Buy me a beer!</p>
-<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
-<input type="hidden" name="cmd" value="_s-xclick">
-<input type="hidden" name="hosted_button_id" value="XHL3363C8EVGE">
-<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
-<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
-</form>
-
 </div>
 
-</div>
+
+<hr>
 <h1>Host a fare:</h1>
     <%= form_for Trip.new do |f| %>
       <%= f.label :time %>
@@ -43,16 +27,16 @@
         <% end %>   
       <% end %>      
     <% end %>
-
-<h1>Or join an existing fare:</h1><br>
+<hr>
+<h1>Or join an existing fare:</h1>
 
 <% @dates.each do |d| %>
-  <h1 id="<%= d %>"><%= d.strftime("%A, %B %d") %></h1>
+  <h3 id="<%= d %>"><%= d.strftime("%A, %B %d") %></h3>
   <div class="row-fluid">
-    <div class="span2"><h3>Time</h3></div>
-    <div class="span2"><h3>From</h3></div>
-    <div class="span2"><h3>To</h3></div>
-    <div class="span6"><h3>Passengers</h3></div>
+    <div class="span2"><h4>Time</h4></div>
+    <div class="span2"><h4>From</h4></div>
+    <div class="span2"><h4>To</h4></div>
+    <div class="span6"><h4>Passengers</h4></div>
   </div>
   <%# TODO: Table component %>
   <div id ="trips">
@@ -144,4 +128,23 @@
     <% end %>
   </div>
 </div>
+<hr>
+<h1>Frequently Asked Questions</h1>
 
+  <p><b>What does this site do?</b></p><p>Vandy FareShare allows you to split a cab with up to 3 other Vanderbilt students.</p> 
+  <p><b>How does this work?</b></p><p>You can browse and join any of the available trips. Or you can create a new trip of your own.</p><p>The host of the fare is responsible for making the actual cab arrangements. All we do is provide a platform to organize passengers.</p>
+  <p><b>Why would I do that ?</b></p><p>You save money. You might also meet a new friend on your cab ride.</p>
+  <p><b>Who sees my contact information?</b></p><p>Only the students you are sharing a cab with.</p>
+  <p><b>What happens if one of the passengers doesn't show up?</b></p><p>Nothing. It's your responsibility to email/text eachother and arrange to meet.</p>
+  <p><b>Did this help you save money?</b></p><p>Buy me a beer!
+
+
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+<input type="hidden" name="cmd" value="_s-xclick">
+<input type="hidden" name="hosted_button_id" value="XHL3363C8EVGE">
+<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+</form>
+
+
+</p>
