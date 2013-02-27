@@ -1,6 +1,7 @@
 class TripsController < ApplicationController
   def index
-    @trips = Trip.find(:all, order: "time")
+    @trips = Trip.where("time >= :date OR time >= :date", date: Time.now).find(:all, order: "time")
+
     @trip = Trip.new
     @dates = @trips.collect { |t| t.time.to_date }.uniq
   end
@@ -87,7 +88,7 @@ class TripsController < ApplicationController
           )
         rescue
         end
-        
+
         end
       end      
       @trip.destroy if @trip.users.count == 0
