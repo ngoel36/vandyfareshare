@@ -46,12 +46,15 @@ class TripsController < ApplicationController
     twilio_phone_number = "6156175550"
  
     @twilio_client = Twilio::REST::Client.new twilio_sid, twilio_token
- 
-    @twilio_client.account.sms.messages.create(
-      :from => "+1#{twilio_phone_number}",
-      :to => number_to_send_to,
-      :body => "Your trip has been created on Vandy FareShare! You will receive a text if somebody else joins (with their contact info)."
-    )
+
+    begin
+      @twilio_client.account.sms.messagescreate(
+        :from => "+1#{twilio_phone_number}",
+        :to => number_to_send_to,
+        :body => "Your trip has been created on Vandy FareShare! You will receive a text if somebody else joins (with their contact info)."
+      )
+    rescue
+    end
 
       @trip.users << current_user if user_signed_in?
     else
@@ -74,12 +77,17 @@ class TripsController < ApplicationController
           twilio_phone_number = "6156175550"
        
           @twilio_client = Twilio::REST::Client.new twilio_sid, twilio_token
-       
+
+
+        begin
           @twilio_client.account.sms.messages.create(
             :from => "+1#{twilio_phone_number}",
             :to => number_to_send_to,
             :body => "#{current_user.name} has left your Vandy FareShare trip :(."
           )
+        rescue
+        end
+        
         end
       end      
       @trip.destroy if @trip.users.count == 0
